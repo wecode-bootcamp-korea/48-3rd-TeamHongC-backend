@@ -3,7 +3,7 @@
 
 ### dotenv ###
 .env
-.env.sample
+.env.test
 ### Linux ###
 *~
 
