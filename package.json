@@ -1,0 +1,36 @@
+{
+  "name": "48-3rd-teamhongc-backend",
+  "version": "1.0.0",
+  "description": "최홍, 박건률, 김민수, 임홍규, 김수영 ### 기술스택 정보 - Node.js - Typeorm - MySQL - JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "DOTENV_CONFIG_PATH=.env.test jest --setupFiles=dotenv/config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wecode-bootcamp-korea/48-3rd-TeamHongC-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wecode-bootcamp-korea/48-3rd-TeamHongC-backend/issues"
+  },
+  "homepage": "https://github.com/wecode-bootcamp-korea/48-3rd-TeamHongC-backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.0",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "jest": "^29.6.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  }
+}
