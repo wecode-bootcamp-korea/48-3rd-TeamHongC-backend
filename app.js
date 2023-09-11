@@ -1,11 +1,11 @@
 require("dotenv").config();
 
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
 const { AppDataSource } = require("./src/models/data-source");
 const { routes } = require("./src/routes");
-const { globalErrorHandler } = require("./src/utils/error");
+const { globalErrorHandler } = require('./src/utils/error');
 
 const createApp = () => {
   const app = express();
