@@ -68,7 +68,6 @@ CREATE TABLE `items` (
   `title` varchar(255) NOT NULL,
   `price` int NOT NULL,
   `item_count` int NOT NULL DEFAULT '1',
-  `location` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -93,6 +92,23 @@ CREATE TABLE `likes` (
   KEY `likes_item_id_fk` (`item_id`),
   CONSTRAINT `likes_item_id_fk` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
   CONSTRAINT `likes_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `locations`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `locations` (
+  `id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `location_x` decimal(25,15) NOT NULL,
+  `location_y` decimal(25,15) NOT NULL,
+  `region_1depth_name` text NOT NULL,
+  `region_2depth_name` text NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -196,7 +212,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'HongC'
+-- Dumping routines for database 'HongCTree'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -224,5 +240,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20230911023056'),
   ('20230911023220'),
   ('20230911023315'),
-  ('20230911023331');
+  ('20230911023331'),
+  ('20230911071929');
 UNLOCK TABLES;
