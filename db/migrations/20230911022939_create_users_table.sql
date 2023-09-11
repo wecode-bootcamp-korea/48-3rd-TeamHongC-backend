@@ -9,7 +9,6 @@ CREATE TABLE users (
   phonenumber varchar(100) NOT NULL,
   point int DEFAULT 100000,
   ceo_number varchar(255),
-  location varchar(255),
   is_hong tinyint DEFAULT (false),
   profile_image varchar(150) DEFAULT "default url",
   created_at timestamp NOT NULL DEFAULT current_timestamp,

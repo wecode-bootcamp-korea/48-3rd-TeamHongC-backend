@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE purchase_item (
-  id int PRIMARY KEY NOT NULL,
+  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL,
   item_id int NOT NULL,
   created_at timestamp NOT NULL DEFAULT current_timestamp,

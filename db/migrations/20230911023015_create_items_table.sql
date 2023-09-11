@@ -4,7 +4,7 @@ CREATE TABLE items (
   category_id int NOT NULL,
   user_id int NOT NULL,
   item_description text,
-  item_condition tinyint NOT NULL DEFAULT 0,
+  item_condition tinyint NOT NULL,
   title varchar(255) NOT NULL,
   price int NOT NULL,
   item_count int NOT NULL DEFAULT 1,
