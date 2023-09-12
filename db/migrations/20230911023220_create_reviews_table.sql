@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE reviews (
-  id int PRIMARY KEY NOT NULL,
+  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   item_id int NOT NULL,
   user_id int NOT NULL,
   content varchar(255) NOT NULL,

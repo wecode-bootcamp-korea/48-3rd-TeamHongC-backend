@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE payment (
-  id int PRIMARY KEY NOT NULL,
+  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   payment_type varchar(255),
   payment_number varchar(255),
   purchase_item_id int NOT NULL,

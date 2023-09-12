@@ -16,7 +16,7 @@
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `agrees` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `terms_service` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -44,7 +44,7 @@ CREATE TABLE `categories` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `item_images` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `item_id` int NOT NULL,
   `img_url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
@@ -64,10 +64,13 @@ CREATE TABLE `items` (
   `category_id` int NOT NULL,
   `user_id` int NOT NULL,
   `item_description` text,
-  `item_condition` tinyint NOT NULL DEFAULT '0',
+  `item_condition` tinyint NOT NULL,
   `title` varchar(255) NOT NULL,
   `price` int NOT NULL,
   `item_count` int NOT NULL DEFAULT '1',
+  `longitude` decimal(25,15) NOT NULL,
+  `latitude` decimal(25,15) NOT NULL,
+  `region` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -83,32 +86,16 @@ CREATE TABLE `items` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `likes` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `item_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `likes_user_id_fk` (`user_id`),
   KEY `likes_item_id_fk` (`item_id`),
   CONSTRAINT `likes_item_id_fk` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
   CONSTRAINT `likes_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `locations`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `locations` (
-  `id` int NOT NULL,
-  `item_id` int NOT NULL,
-  `location_x` decimal(25,15) NOT NULL,
-  `location_y` decimal(25,15) NOT NULL,
-  `region_1depth_name` text NOT NULL,
-  `region_2depth_name` text NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,7 +106,7 @@ CREATE TABLE `locations` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `payment_type` varchar(255) DEFAULT NULL,
   `payment_number` varchar(255) DEFAULT NULL,
   `purchase_item_id` int NOT NULL,
@@ -138,7 +125,7 @@ CREATE TABLE `payment` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `purchase_item` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `item_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -158,7 +145,7 @@ CREATE TABLE `purchase_item` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reviews` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `item_id` int NOT NULL,
   `user_id` int NOT NULL,
   `content` varchar(255) NOT NULL,
@@ -200,7 +187,6 @@ CREATE TABLE `users` (
   `phonenumber` varchar(100) NOT NULL,
   `point` int DEFAULT '100000',
   `ceo_number` varchar(255) DEFAULT NULL,
-  `location` varchar(255) DEFAULT NULL,
   `is_hong` tinyint DEFAULT (false),
   `profile_image` varchar(150) DEFAULT 'default url',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -212,7 +198,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'HongCTree'
+-- Dumping routines for database 'hongc_test'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -240,6 +226,5 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20230911023056'),
   ('20230911023220'),
   ('20230911023315'),
-  ('20230911023331'),
-  ('20230911071929');
+  ('20230911023331');
 UNLOCK TABLES;
