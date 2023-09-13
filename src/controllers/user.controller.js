@@ -1,5 +1,10 @@
 const userService = require("../services/user.service");
+const { catchAsync } = require("../utils/error");
 
-const signUp = async(userId) = {};
+const kakaoSign = catchAsync(async (req, res) => {
+  const { code } = req.body;
+  const accessToken = await userService.kakaoSign(code);
+  res.status(200).json({ accessToken: accessToken });
+});
 
-module.exports = {signUp};
+module.exports = { kakaoSign };

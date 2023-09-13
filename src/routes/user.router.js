@@ -4,6 +4,6 @@ const userController = require("../controllers/user.controller");
 
 const userRouter = express.Router();
 
-userRouter.post("/signup", userController.signUp);
+userRouter.post("/kakaosign", userController.kakaoSign);
 
 module.exports = { userRouter };
