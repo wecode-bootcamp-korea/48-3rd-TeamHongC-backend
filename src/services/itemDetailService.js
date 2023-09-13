@@ -9,17 +9,17 @@ const getItemDetail = async (id) => {
     detail['price'].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',') +
     '원';
 
-  console.log(typeof detail['price']);
   const createdAt = detail.createdAt;
   const today = new Date();
   const diff = Math.floor((today.getTime() - createdAt.getTime()) / 1000 / 60);
-  if (diff < 1) detail['date'] = '방금전';
-  if (diff < 60) {
+  if (diff <= 1) {
+    detail['date'] = '방금전';
+  } else if (diff < 60) {
     detail['date'] = `${diff}분전`;
   }
 
   const diffHour = Math.floor(diff / 60);
-  if (diffHour < 24) {
+  if (diffHour !== 0 && diffHour < 24) {
     detail['date'] = `${diffHour}시간전`;
   }
 
