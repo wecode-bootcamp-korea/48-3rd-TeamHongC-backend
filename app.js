@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const { globalErrorHandler } = require('./src/utils/error');
+const { routes } = require('./src/routes');
 
 const createApp = () => {
   const app = express();
@@ -11,6 +12,7 @@ const createApp = () => {
   app.use(cors());
   app.use(morgan('combined'));
   app.use(express.json());
+  app.use(routes);
 
   app.all('*', (req, res, next) => {
     const err = new Error(`Can't fine ${req.originalUrl} on this server!`);
