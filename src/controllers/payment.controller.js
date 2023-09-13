@@ -7,4 +7,44 @@ const getList = catchAsync(async (req, res) => {
   res.status(200).json(getpaymentlist);
 });
 
-module.exports = { getList };
+const getPaymentData = catchAsync(async (req, res) => {
+  // const { userId } = req.user;
+  const {
+    userId,
+    quantity,
+    itemId,
+    itemName,
+    totalAmount,
+    approvalUrl,
+    cancelUrl,
+    failUrl,
+  } = req.body;
+  const getPayData = await paymentService.getPayment(
+    userId,
+    quantity,
+    itemId,
+    itemName,
+    totalAmount,
+    approvalUrl,
+    cancelUrl,
+    failUrl
+  );
+
+  res.status(200).json({ redirectUrl: getPayData });
+});
+
+const completePaid = catchAsync(async (req, res) => {
+  const { userId, pgToken } = req.body;
+  await paymentService.completePayment(userId, pgToken);
+
+  res.status(200).json("pay complete");
+});
+
+const deletePaid = catchAsync(async (req, res) => {
+  const { userId } = req.query;
+  // const { userId } = req.user;
+  await paymentService.deletePayment(userId);
+
+  res.status(200).json("delete complete");
+});
+module.exports = { getList, getPaymentData, completePaid, deletePaid };
