@@ -2,24 +2,17 @@ const userDao = require("../models/user.dao");
 const kakaoAuth = require("../utils/kakaoauth");
 const jwt = require("jsonwebtoken");
 
-// const kakaoUrl = async () => {
-//   const kakaoCode = await kakaoAuth.kakaoKey;
-//   console.log(kakaoCode);
-//   return kakaoCode;
-// };
-
-const kakaoSign = async (code) => {
-  const tokenData = await kakaoAuth.getToken(code);
-  console.log(tokenData);
+const kakaoSign = async (accessToken) => {
+  console.log(accessToken);
   const { nickname, profileImage, email } = await kakaoAuth.getUserData(
-    access_token
+    accessToken
   );
   const userInfo = await userDao.getUserByEmail(email);
-
   if (!userInfo) {
     await userDao.createUser(nickname, profileImage, email);
+    const userSerch = await userDao.getUserByEmail(email);
     return jwt.sign(
-      { id: userInfo.id, email: userInfo.email },
+      { id: userSerch.id, email: userSerch.email },
       process.env.JWT_SECRET
     );
   } else {
