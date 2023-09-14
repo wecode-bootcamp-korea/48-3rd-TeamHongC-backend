@@ -7,3 +7,4 @@ const routes = express.Router();
 routes.use("/item", detailRouter);
 
 routes.use("/user", userRouter);
+module.exports = { routes };
