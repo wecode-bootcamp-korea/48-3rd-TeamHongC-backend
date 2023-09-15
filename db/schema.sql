@@ -107,14 +107,20 @@ CREATE TABLE `likes` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  `total_price` int NOT NULL,
+  `is_paid` int DEFAULT '0',
   `payment_type` varchar(255) DEFAULT NULL,
   `payment_number` varchar(255) DEFAULT NULL,
-  `purchase_item_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `payment_id_fk` (`purchase_item_id`),
-  CONSTRAINT `payment_id_fk` FOREIGN KEY (`purchase_item_id`) REFERENCES `purchase_item` (`id`)
+  KEY `fk_users_payment` (`user_id`),
+  KEY `fk_items_payment` (`item_id`),
+  CONSTRAINT `fk_items_payment` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
+  CONSTRAINT `fk_users_payment` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `payment_id_fk` FOREIGN KEY (`item_id`) REFERENCES `purchase_item` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -126,16 +132,13 @@ CREATE TABLE `payment` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `purchase_item` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
   `payment_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `purchase_item_user_id_fk` (`user_id`),
   KEY `fk_purchase_item_payment` (`payment_id`),
   CONSTRAINT `fk_purchase_item_payment` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`),
-  CONSTRAINT `purchase_item_item_id_fk` FOREIGN KEY (`payment_id`) REFERENCES `items` (`id`),
-  CONSTRAINT `purchase_item_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `purchase_item_item_id_fk` FOREIGN KEY (`payment_id`) REFERENCES `items` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,9 +202,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
-
--- Dumping routines for database 'hongc'
-
+-- Dumping routines for database 'HongCTree'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -230,5 +231,7 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20230911023220'),
   ('20230911023315'),
   ('20230911023331'),
-  ('20230914020903');
+  ('20230914020903'),
+  ('20230915050834'),
+  ('20230915052334');
 UNLOCK TABLES;
