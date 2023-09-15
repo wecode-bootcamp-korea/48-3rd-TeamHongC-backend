@@ -127,13 +127,14 @@ CREATE TABLE `payment` (
 CREATE TABLE `purchase_item` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `item_id` int NOT NULL,
+  `payment_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `purchase_item_item_id_fk` (`item_id`),
   KEY `purchase_item_user_id_fk` (`user_id`),
-  CONSTRAINT `purchase_item_item_id_fk` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
+  KEY `fk_purchase_item_payment` (`payment_id`),
+  CONSTRAINT `fk_purchase_item_payment` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`),
+  CONSTRAINT `purchase_item_item_id_fk` FOREIGN KEY (`payment_id`) REFERENCES `items` (`id`),
   CONSTRAINT `purchase_item_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -198,7 +199,9 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'HongCTreeTest'
+
+-- Dumping routines for database 'hongc'
+
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -226,5 +229,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20230911023056'),
   ('20230911023220'),
   ('20230911023315'),
-  ('20230911023331');
+  ('20230911023331'),
+  ('20230914020903');
 UNLOCK TABLES;
