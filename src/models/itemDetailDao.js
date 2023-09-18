@@ -2,7 +2,14 @@ const { AppDataSource } = require('./data-source');
 
 const getItemDetail = async (id) => {
   const [detail] = await AppDataSource.query(
-    `SELECT i.id,u.nickname, i.title,i.item_condition AS itemCondition,i.item_description AS description,i.price,i.item_count AS itemCount,i.region, i.created_at AS createdAt
+    `SELECT i.id,
+    u.nickname, 
+    i.title,
+    i.item_condition AS itemCondition,
+    i.item_description AS description,
+    i.price,i.item_count AS itemCount,
+    i.region, 
+    i.created_at AS createdAt
         FROM items i
         JOIN users u
         ON u.id = i.user_id

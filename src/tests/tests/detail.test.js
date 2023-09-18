@@ -34,7 +34,7 @@ describe('detail', () => {
   test('Success', async () => {
     const response = await request(app).get('/item/1');
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
     expect(response.body).toEqual({
       data: {
         id: 1,
