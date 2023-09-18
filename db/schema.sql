@@ -184,11 +184,11 @@ CREATE TABLE `schema_migrations` (
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `agree_id` int DEFAULT '1',
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(200) NOT NULL,
+  `password` varchar(200) DEFAULT NULL,
   `nickname` varchar(100) NOT NULL,
-  `phonenumber` varchar(100) NOT NULL,
+  `phonenumber` varchar(100) DEFAULT NULL,
   `point` int DEFAULT '100000',
   `ceo_number` varchar(255) DEFAULT NULL,
   `is_hong` tinyint DEFAULT (false),
@@ -233,5 +233,6 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20230911023331'),
   ('20230914020903'),
   ('20230915050834'),
-  ('20230915052334');
+  ('20230915052334'),
+  ('20230918044817');
 UNLOCK TABLES;
