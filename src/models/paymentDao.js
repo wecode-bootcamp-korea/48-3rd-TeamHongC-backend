@@ -74,7 +74,6 @@ const updatePgToken = async (userId, tid, pgToken) => {
 };
 
 const deletePayment = async (userId) => {
-  console.log(userId);
   await AppDataSource.query(
     `
     DELETE

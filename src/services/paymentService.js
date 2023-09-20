@@ -1,5 +1,5 @@
 const { CustomRepositoryCannotInheritRepositoryError } = require("typeorm");
-const paymentDao = require("../models/payment.dao");
+const paymentDao = require("../models/paymentDao");
 const kakaoPayment = require("../utils/kakaopayment");
 const { generateRandomCode } = require("../utils/ordernumber");
 
