@@ -2,7 +2,7 @@ const { catchAsync } = require('../utils/error');
 const itemListService = require('../services/itemListService');
 
 const getAllItems = catchAsync(async (req, res) => {
-    const { x, y, condition, categoryId, } = req.query;
+    const { x, y, condition, categoryId } = req.query;
     const userId = req.user.id;
     const items = await itemListService.getAllItems(x, y, condition, categoryId, userId);
     res.status(200).json(items);
