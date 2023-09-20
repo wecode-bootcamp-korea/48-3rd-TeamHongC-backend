@@ -1,8 +1,8 @@
-const { AppDataSource } = require('./data-source');
+const { AppDataSource } = require("./data-source");
 
 const searchItem = async (keyword) => {
   const searchKeyword = `%${keyword}%`;
-  const [item] = await AppDataSource.query(
+  const item = await AppDataSource.query(
     `SELECT i.id,
         ii.img_url,
         i.title,
