@@ -9,7 +9,7 @@ const likeItem = async (userId, itemId) => {
 const deleteItem = async (userId, itemId) => {
   await AppDataSource.query(
     `DELETE FROM likes 
-    WHERE user_id = ? AND item_id = ?`,
+    WHERE user_id = ? AND item_id = ?;`,
     [userId, itemId]
   );
 };
