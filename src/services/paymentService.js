@@ -1,5 +1,5 @@
 const { CustomRepositoryCannotInheritRepositoryError } = require("typeorm");
-const paymentDao = require("../models/payment.dao");
+const paymentDao = require("../models/paymentDao");
 const kakaoPayment = require("../utils/kakaopayment");
 const { generateRandomCode } = require("../utils/ordernumber");
 
@@ -38,21 +38,24 @@ const getPayment = async (
 };
 
 const completePayment = async (userId, pgToken) => {
-  try {
-    const getPayment = await paymentDao.getPayment(userId);
-    const { tid, partnerOrderId } = getPayment;
-    await paymentDao.updatePgToken(userId, tid, pgToken);
-    return await kakaoPayment.completePayment(
-      userId,
-      tid,
-      partnerOrderId,
-      pgToken
-    );
-  } catch {
-    const err = new Error();
-    err.statusCode = 400;
-    throw err;
-  }
+  // try {
+  console.log(userId);
+  const getPayment = await paymentDao.getPayment(userId);
+  console.log(getPayment);
+  const { tid, partnerOrderId } = getPayment;
+  console.log(tid, partnerOrderId);
+  await paymentDao.updatePgToken(userId, tid, pgToken);
+  return await kakaoPayment.completePayment(
+    userId,
+    tid,
+    partnerOrderId,
+    pgToken
+  );
+  // } catch {
+  //   const err = new Error();
+  //   err.statusCode = 400;
+  //   throw err;
+  // }
 };
 
 const deletePayment = async (userId) => {
