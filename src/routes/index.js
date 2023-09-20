@@ -4,6 +4,7 @@ const { userRouter } = require('./user.router');
 const { surroundItemRouter } = require('./surroundItems');
 const { paymentRouter } = require('./payment.router');
 const { searchRouter } = require('./itemSearch');
+const { likeRouter } = require('./itemLike');
 
 const routes = express.Router();
 
@@ -14,4 +15,5 @@ routes.use('/item', detailRouter);
 routes.use('/user', userRouter);
 routes.use('/payment', paymentRouter);
 routes.use('/items', searchRouter);
+routes.use('/like', likeRouter);
 module.exports = { routes };
