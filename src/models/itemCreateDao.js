@@ -1,8 +1,20 @@
 const { AppDataSource } = require("./data-source");
 
-const createItem = async (categoryId, itemDescription, itemCondition, title, price, itemCount, longitude, latitude, region, userId) => {
-    try {
-        const result = await AppDataSource.query(`
+const createItem = async (
+  categoryId,
+  itemDescription,
+  itemCondition,
+  title,
+  price,
+  itemCount,
+  longitude,
+  latitude,
+  region,
+  userId
+) => {
+  try {
+    const result = await AppDataSource.query(
+      `
     INSERT INTO items (
         category_id,
         item_description,
@@ -25,22 +37,33 @@ const createItem = async (categoryId, itemDescription, itemCondition, title, pri
         ?,
         ?,
         ?
-        )`, 
-        [categoryId, itemDescription, itemCondition, title, price, itemCount, longitude, latitude, region, userId]
-        );
-        return result.insertId;
-    } catch (err) {
-        console.log(err);
-        const error = new Error("dataSource error");
-        error.statusCode = 400;
-        throw error;
-    }
+        )`,
+      [
+        categoryId,
+        itemDescription,
+        itemCondition,
+        title,
+        price,
+        itemCount,
+        longitude,
+        latitude,
+        region,
+        userId,
+      ]
+    );
+    return result.insertId;
+  } catch (err) {
+    const error = new Error("dataSource error");
+    error.statusCode = 400;
+    throw error;
+  }
 };
 
 const createItemImages = async (itemId, imgUrl) => {
-    try {
-        const queries = imgUrl.map(url => 
-            AppDataSource.query(`
+  try {
+    const queries = imgUrl.map((url) =>
+      AppDataSource.query(
+        `
                 INSERT INTO item_images (
                     item_id, 
                     img_url
@@ -48,21 +71,20 @@ const createItemImages = async (itemId, imgUrl) => {
                     ?, 
                     ?
                 )
-            `, [itemId, url])
-        );
-        
-        await Promise.all(queries);
-    } catch (err) {
-        console.log(err);
-        const error = new Error("dataSource error");
-        error.statusCode = 400;
-        throw error;
-    }
+            `,
+        [itemId, url]
+      )
+    );
+
+    await Promise.all(queries);
+  } catch (err) {
+    const error = new Error("dataSource error");
+    error.statusCode = 400;
+    throw error;
+  }
 };
 
-
-
 module.exports = {
-    createItem,
-    createItemImages
+  createItem,
+  createItemImages,
 };

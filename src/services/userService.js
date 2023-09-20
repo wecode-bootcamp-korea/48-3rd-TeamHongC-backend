@@ -1,4 +1,4 @@
-const userDao = require("../models/user.dao");
+const userDao = require("../models/userDao");
 const kakaoAuth = require("../utils/kakaoauth");
 const jwt = require("jsonwebtoken");
 
