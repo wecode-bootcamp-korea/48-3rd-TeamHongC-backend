@@ -1,4 +1,4 @@
-const { AppDataSource } = require('./data-source');
+const { AppDataSource } = require("./data-source");
 
 const getItemDetail = async (id) => {
   const [detail] = await AppDataSource.query(
@@ -19,14 +19,15 @@ const getItemDetail = async (id) => {
   return detail;
 };
 
-const getItemReview = async (id) => {
+const getItemReview = async (itemId) => {
   const review = await AppDataSource.query(
-    `select u.nickname,r.content
+    `select u.id, u.nickname as nickname, r.content as content
     from reviews r
     join users u
     on u.id = r.user_id
-    where r.item_id = ?;`,
-    [id]
+    where r.item_id = ?
+    ORDER BY r.updated_at DESC;`,
+    [itemId]
   );
   return review;
 };
