@@ -1,4 +1,4 @@
-const { AppDataSource } = require("./data-source");
+const { AppDataSource } = require('./data-source');
 
 const getPaymentList = async (productId) => {
   try {
@@ -74,7 +74,6 @@ const updatePgToken = async (userId, tid, pgToken) => {
 };
 
 const deletePayment = async (userId) => {
-  console.log(userId);
   await AppDataSource.query(
     `
     DELETE
