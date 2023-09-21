@@ -1,8 +1,9 @@
-const { AppDataSource } = require('./data-source');
+const { AppDataSource } = require("./data-source");
 
 const getSurroundItem = async (x, y, radius) => {
-  const surround = await AppDataSource.query(
-    `SELECT id, title, price, latitude, longitude, imgUrl, distance
+  try {
+    const surround = await AppDataSource.query(
+      `SELECT id, title, price, latitude, longitude, imgUrl, distance
     FROM (
         SELECT i.id,
             i.title,
@@ -16,9 +17,14 @@ const getSurroundItem = async (x, y, radius) => {
         GROUP BY i.id, i.title, i.price, i.latitude, i.longitude
         HAVING distance <= ${radius}
     ) AS filtered_items;`
-  );
-
-  return surround;
+    );
+    console.log("DAAAAAAAAAATTTTAaAAAAA: ", surround);
+    return surround;
+  } catch {
+    const err = new Error();
+    err.status = 400;
+    throw err;
+  }
 };
 
 module.exports = { getSurroundItem };

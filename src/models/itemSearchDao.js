@@ -1,10 +1,10 @@
-const { AppDataSource } = require('./data-source');
+const { AppDataSource } = require("./data-source");
 
 const searchItem = async (userId, keyword) => {
   const searchKeyword = `%${keyword}%`;
   const item = await AppDataSource.query(
     `SELECT i.id AS itemId,
-    MAX(ii.img_url) AS img_url AS imgUrl,
+    MAX(ii.img_url) AS imgUrl,
     i.title,
     MAX(i.price) AS price,
     CASE WHEN l.item_id IS NOT NULL THEN 1 ELSE 0 END AS liked

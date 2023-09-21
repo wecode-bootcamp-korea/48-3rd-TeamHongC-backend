@@ -1,38 +1,37 @@
 const { AppDataSource } = require("./data-source");
 
-    const myProfile = async (userId) => {
-        return await AppDataSource.query(
-            ` 
+const myProfile = async (userId) => {
+  return await AppDataSource.query(
+    ` 
             SELECT id,nickname,profile_image as profileImage
             from users u 
             WHERE id =?;    
-            `,[userId]
+            `,
+    [userId]
+  );
+};
 
-        );
-    };
-
-    const buyHistory = async (userId) => {
-    const buy = await AppDataSource.query(
-        `
+const buyHistory = async (userId) => {
+  const buy = await AppDataSource.query(
+    `
         SELECT      
         u.id as userid,
         i.id as itemid,
         i.title,
         i.price
         FROM  items i 
-        LEFT  JOIN users u on i.user_id = u.id 
         LEFT  JOIN  payment p on i.id = p.item_id
+        LEFT  JOIN users u on p.user_id = u.id 
         WHERE u.id =?;
         `,
-        [userId]
-    );
-    return buy;
-   
-};  
+    [userId]
+  );
+  return buy;
+};
 
-    const saleHistory = async (userId)=>{
-        const sale = await AppDataSource.query(
-            `
+const saleHistory = async (userId) => {
+  const sale = await AppDataSource.query(
+    `
              SELECT
              u.id as userId,
              i.id as itemId,
@@ -45,12 +44,11 @@ const { AppDataSource } = require("./data-source");
              FROM  items i
              LEFT JOIN users u on i.user_id = u.id
             WHERE u.id =?;
-            `,[userId]
-        );
+            `,
+    [userId]
+  );
 
-        return sale;
-    };
+  return sale;
+};
 
-
-
-module.exports = {myProfile,buyHistory,saleHistory };
+module.exports = { myProfile, buyHistory, saleHistory };

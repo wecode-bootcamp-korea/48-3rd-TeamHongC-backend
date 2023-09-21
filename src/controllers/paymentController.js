@@ -1,4 +1,4 @@
-const paymentService = require("../services/payment.service");
+const paymentService = require("../services/paymentService");
 const { catchAsync } = require("../utils/error");
 
 const getList = catchAsync(async (req, res) => {
@@ -8,9 +8,8 @@ const getList = catchAsync(async (req, res) => {
 });
 
 const getPaymentData = catchAsync(async (req, res) => {
-  // const { userId } = req.user;
+  const userId = req.user.id;
   const {
-    userId,
     quantity,
     itemId,
     itemName,
@@ -34,15 +33,16 @@ const getPaymentData = catchAsync(async (req, res) => {
 });
 
 const completePaid = catchAsync(async (req, res) => {
-  const { userId, pgToken } = req.body;
+  const userId = req.user.id;
+  console.log(userId);
+  const { pgToken } = req.body;
   await paymentService.completePayment(userId, pgToken);
 
   res.status(200).json("pay complete");
 });
 
 const deletePaid = catchAsync(async (req, res) => {
-  const { userId } = req.query;
-  // const { userId } = req.user;
+  const userId = req.user.id;
   await paymentService.deletePayment(userId);
 
   res.status(200).json("delete complete");

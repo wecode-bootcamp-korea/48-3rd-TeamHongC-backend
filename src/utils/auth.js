@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const { userDao } = require("../models/user.dao");
+const userDao = require("../models/userDao");
 
 const loginRequired = async (req, res, next) => {
   try {
@@ -28,7 +28,7 @@ const loginRequired = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    console.log(err)
+    console.log(err);
     const error = new Error("INVALID_ACCESS_TOKEN");
     error.statusCode = 401;
 

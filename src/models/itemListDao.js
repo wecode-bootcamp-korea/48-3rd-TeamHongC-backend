@@ -1,25 +1,25 @@
 const { AppDataSource } = require("./data-source");
 
 const getAllItems = async (x, y, condition, categoryId, userId) => {
-    try {
-        let conditionFilter = "1=1";
-        let categoryFilter = "1=1";
+  try {
+    let conditionFilter = "1=1";
+    let categoryFilter = "1=1";
 
-        if (condition && condition !== "all") {
-            const conditionClause = await getConditionFilter(condition);
-            if (conditionClause) {
-                conditionFilter = conditionClause;
-            }
-        }
+    if (condition && condition !== "all") {
+      const conditionClause = await getConditionFilter(condition);
+      if (conditionClause) {
+        conditionFilter = conditionClause;
+      }
+    }
 
-        if (categoryId && categoryId !== "all") {
-            const categoryClause = await getCategoryFilter(categoryId);
-            if (categoryClause) {
-                categoryFilter = categoryClause;
-            }
-        }
+    if (categoryId && categoryId !== "all") {
+      const categoryClause = await getCategoryFilter(categoryId);
+      if (categoryClause) {
+        categoryFilter = categoryClause;
+      }
+    }
 
-        const result = await AppDataSource.query(`
+    const result = await AppDataSource.query(`
         SELECT 
         i.id AS itemId,
         i.category_id AS categoryId,
@@ -34,8 +34,8 @@ const getAllItems = async (x, y, condition, categoryId, userId) => {
         COUNT(DISTINCT l.id) AS likeCount,
         COUNT(DISTINCT reviews.id) AS reviewCount,
         CASE
-            WHEN likes.user_id IS NOT NULL THEN TRUE
-            ELSE FALSE
+            WHEN likes.user_id IS NOT NULL THEN 1
+            ELSE 0
         END AS liked,
         (6371 * acos(cos(radians(${x})) * 
         cos(radians(longitude))*cos(radians(latitude)
@@ -50,57 +50,57 @@ const getAllItems = async (x, y, condition, categoryId, userId) => {
         LEFT JOIN item_images ii ON i.id = ii.item_id
         WHERE ${conditionFilter} AND ${categoryFilter} AND i.item_count > 0
         GROUP BY i.id
-        HAVING distance < 100000
+        HAVING distance < 10000
         ORDER BY i.created_at DESC;
         `);
-        return result;
-    } catch (err) {
-        console.log(err);
-        const error = new Error("dataSource error");
-        error.statusCode = 400;
+    return result;
+  } catch (err) {
+    console.log(err);
+    const error = new Error("dataSource error");
+    error.statusCode = 400;
 
-        throw error;
-    }
+    throw error;
+  }
 };
 
-const getConditionFilter = async(condition) => {
-    if (!condition || condition === "all") {
-        return "";
-    } else if (condition === "new") {
-        return "item_condition = 1";
-    } else if (condition === "used") {
-        return "item_condition = 0"
-    }
+const getConditionFilter = async (condition) => {
+  if (!condition || condition === "all") {
+    return "";
+  } else if (condition === "new") {
+    return "item_condition = 1";
+  } else if (condition === "used") {
+    return "item_condition = 0";
+  }
 };
 
-const getCategoryFilter = async(category) => {
-    if (!category || category === "all") {
-        return "";
-    } else {
-        return `i.category_id = ${category}`;
-    }
+const getCategoryFilter = async (category) => {
+  if (!category || category === "all") {
+    return "";
+  } else {
+    return `i.category_id = ${category}`;
+  }
 };
 
-const getCategory =async () => {
-    try {
-        const result = await AppDataSource.query(`
+const getCategory = async () => {
+  try {
+    const result = await AppDataSource.query(`
         SELECT 
         id,
         name
         FROM categories;
         `);
-        return result;
-    } catch (err) {
-        console.log(err);
-        const error = new Error("dataSource error");
-        error.statusCode = 400;
-        throw error;
-    }
-}
+    return result;
+  } catch (err) {
+    console.log(err);
+    const error = new Error("dataSource error");
+    error.statusCode = 400;
+    throw error;
+  }
+};
 
 module.exports = {
-    getAllItems,
-    getConditionFilter,
-    getCategoryFilter,
-    getCategory
-}
+  getAllItems,
+  getConditionFilter,
+  getCategoryFilter,
+  getCategory,
+};
