@@ -7,7 +7,8 @@ const startServer = async () => {
   const PORT = process.env.PORT || 3000;
 
   app.listen(PORT, async () => {
-    await AppDataSource.initialize()
+    await AppDataSource
+      .initialize()
       .then(() => {
         console.log('Data Source has been initialized!');
       })
