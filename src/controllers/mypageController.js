@@ -2,21 +2,45 @@ const { catchAsync } = require("../utils/error");
 const mypageService = require("../services/mypageService");
 
 const getMypage = catchAsync(async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.query.userId;
+
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required" });
+  }
+
   const myPage = await mypageService.myProfile(userId);
-  res.status(201).json(myPage);
+
+  if (!myPage) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  res.status(200).json(myPage);
 });
 
 const getBuyHistory = catchAsync(async (req, res) => {
-  const userId = req.user.id;
-  const buy = await mypageService.buyHistory(userId);
-  res.status(201).json(buy);
+  const userId = req.query.userId;
+
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required" });
+  }
+
+  const buyHistory = await mypageService.buyHistory(userId);
+  res.status(200).json(buyHistory);
 });
 
 const getSaleHistory = catchAsync(async (req, res) => {
-  const userId = req.user.id;
-  const sale = await mypageService.saleHistory(userId);
-  res.status(201).json(sale);
+  const userId = req.query.userId;
+
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required" });
+  }
+
+  const saleHistory = await mypageService.saleHistory(userId);
+  res.status(200).json(saleHistory);
 });
 
-module.exports = { getBuyHistory, getSaleHistory, getMypage };
+module.exports = { getMypage, getBuyHistory, getSaleHistory };
+
+
+
+

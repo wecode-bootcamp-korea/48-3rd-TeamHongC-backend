@@ -1,29 +1,24 @@
 const mypageDao = require("../models/mypageDao");
 
+const formatPrice = (data) => {
+  return data.map((item) => {
+    item["price"] = item["price"].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return item;
+  });
+};
+
 const myProfile = async (userId) => {
   return await mypageDao.myProfile(userId);
 };
+
 const buyHistory = async (userId) => {
   const buy = await mypageDao.buyHistory(userId);
-  const BuyList = buy.map((item) => {
-    item["price"] = item["price"]
-      .toString()
-      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    return item;
-  });
-
-  return BuyList;
+  return formatPrice(buy);
 };
 
 const saleHistory = async (userId) => {
   const sale = await mypageDao.saleHistory(userId);
-  const saleList = sale.map((item) => {
-    item["price"] = item["price"]
-      .toString()
-      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    return item;
-  });
-  return saleList;
+  return formatPrice(sale);
 };
 
 module.exports = { myProfile, buyHistory, saleHistory };

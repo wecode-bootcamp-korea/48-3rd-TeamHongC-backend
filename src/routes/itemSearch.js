@@ -5,4 +5,5 @@ const searchRouter = express.Router();
 
 searchRouter.get('', loginRequired, searchItem);
 
+searchRouter.get('',searchItem);
 module.exports = { searchRouter };
